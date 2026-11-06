@@ -1,0 +1,33 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ===== Taleem Umerkot MVP models =====
+
+// Volunteer teachers who register to help students
+model Volunteer {
+  id        String   @id @default(cuid())
+  name      String           // Full name of the volunteer
+  subject   String           // Subject they can teach (e.g. Math, Urdu, Sindhi)
+  phone     String           // Phone number so students can contact them
+  mode      String   @default("online") // "online" or "in-person"
+  createdAt DateTime @default(now())
+}
+
+// Reports about school problems submitted by citizens
+model SchoolReport {
+  id        String   @id @default(cuid())
+  schoolName String          // Name of the school
+  problem   String           // Type of problem: electricity, water, washroom, teachers, etc.
+  details   String           // More info from the person reporting
+  status    String   @default("pending") // pending, in-progress, resolved
+  createdAt DateTime @default(now())
+}
